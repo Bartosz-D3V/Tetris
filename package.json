@@ -1,0 +1,28 @@
+{
+  "name": "Tetris",
+  "version": "1.0.0",
+  "description": "Yet another Tetris remake in pure JS.",
+  "repository": "git@github.com:Bartosz-D3V/Tetris.git",
+  "author": "Bartosz Wyporkiewicz <nix.noxi379@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --hot --env=dev --open"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "autoprefixer": "^9.4.9",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "cssnano": "^4.1.10",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "postcss-loader": "^3.0.0",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
+  }
+}
