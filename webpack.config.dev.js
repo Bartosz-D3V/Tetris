@@ -1,9 +1,11 @@
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: [
+        './src/index',
+        './index.html'
+    ],
     mode: 'development',
     devtool: 'cheap-module-source-map',
     watch: true,
@@ -11,8 +13,13 @@ module.exports = {
         filename: './bundle.js',
     },
     devServer: {
-        contentBase: './',
-        watchContentBase: true,
+        hot: true,
+        inline: true,
+        host: "localhost",
+        port: 8080,
+        watchOptions: {
+            poll: true
+        }
     },
     module: {
         rules: [
@@ -40,7 +47,8 @@ module.exports = {
     plugins: [
         new HtmlWebPackPlugin({
             template: './index.html',
-            filename: './index.html',
+            filename: 'index.html',
+            minify: false
         }),
         new webpack.HotModuleReplacementPlugin(),
     ],
