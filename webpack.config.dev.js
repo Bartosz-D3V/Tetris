@@ -1,8 +1,9 @@
 const webpack = require("webpack");
+const autoprefixer = require("autoprefixer");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: ["./src/index", "./index.html"],
+  entry: ["./src/index", "./index.html", "./style/manifest.css"],
   mode: "development",
   devtool: "cheap-module-source-map",
   watch: true,
@@ -35,7 +36,12 @@ module.exports = {
             }
           },
           { loader: "css-loader" },
-          { loader: "postcss-loader" }
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: () => [autoprefixer]
+            }
+          }
         ]
       },
       { test: /\.html$/, loader: "html-loader" }
