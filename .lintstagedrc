@@ -1,0 +1,12 @@
+{
+  "linters": {
+    "*.{js,css,json,md,yml}": [
+      "npm run pretty",
+      "git add"
+    ],
+    "*.{js,css}": [
+      "npm run lint",
+      "git add"
+    ]
+  }
+}
