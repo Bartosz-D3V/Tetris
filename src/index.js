@@ -1,1 +1,1 @@
-// import "../style/manifest.css";
+import "../style/manifest.css";
