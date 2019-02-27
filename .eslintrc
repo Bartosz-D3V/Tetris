@@ -4,7 +4,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "worker": true
+    "worker": true,
+    "node": true
   },
   "rules": {
     "linebreak-style": "off"
