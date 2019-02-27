@@ -1,30 +1,25 @@
-const webpack = require("webpack");
 const autoprefixer = require("autoprefixer");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: ["./src/index", "./index.html"],
-  mode: "development",
-  devtool: "cheap-module-source-map",
-  watch: true,
+  mode: "production",
+  devtool: "none",
+  watch: false,
   output: {
     filename: "./bundle.js"
-  },
-  devServer: {
-    hot: true,
-    inline: true,
-    host: "localhost",
-    port: 8080,
-    watchOptions: {
-      poll: true
-    }
   },
   module: {
     rules: [
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: {
+          loader: "babel-loader",
+          options: {
+            sourceMap: false
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -32,27 +27,40 @@ module.exports = {
           {
             loader: "style-loader",
             options: {
-              sourceMap: true
+              sourceMap: false
             }
           },
-          { loader: "css-loader" },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: false
+            }
+          },
           {
             loader: "postcss-loader",
             options: {
-              plugins: () => [autoprefixer]
+              plugins: () => [autoprefixer],
+              options: {
+                sourceMap: false
+              }
             }
           }
         ]
       },
-      { test: /\.html$/, loader: "html-loader" }
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+        options: {
+          minimize: true
+        }
+      }
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./index.html",
       filename: "index.html",
-      minify: false
-    }),
-    new webpack.HotModuleReplacementPlugin()
+      minify: true
+    })
   ]
 };
