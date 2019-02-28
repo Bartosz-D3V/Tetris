@@ -1,2 +1,3 @@
 dist/
 node_modules/
+style/_reset.css

@@ -7,8 +7,9 @@ const { clientWidth, clientHeight } = canvas;
 const BLOCK_WIDTH = clientWidth / cols;
 const BLOCK_HEIGHT = clientHeight / rows;
 
-const drawBoard = () => {
-  drawBlock(0, 0);
+const setCanvasSize = () => {
+  canvas.width = clientWidth;
+  canvas.height = clientHeight;
 };
 
 const drawBlock = (x, y) => {
@@ -16,9 +17,8 @@ const drawBlock = (x, y) => {
   ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
 };
 
-const setCanvasSize = () => {
-  canvas.width = clientWidth;
-  canvas.height = clientHeight;
+const drawBoard = () => {
+  drawBlock(0, 0);
 };
 
 window.addEventListener("load", () => {

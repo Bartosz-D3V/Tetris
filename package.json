@@ -10,7 +10,9 @@
     "start": "webpack-dev-server --hot --env=dev --open",
     "preprod": "rm -rf ./dist/",
     "prod": "webpack --env=prod",
-    "lint": "eslint \"**/*.js\"",
+    "lint": "npm run stylelint && npm run eslint",
+    "eslint": "eslint \"**/*.js\"",
+    "stylelint": "stylelint --config ./.stylelintrc --color **/*.css",
     "lint-staged": "lint-staged --config .lintstagedrc",
     "pretty": "prettier --write **/*.{js,css,json,md,yml}"
   },
