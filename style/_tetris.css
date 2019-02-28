@@ -1,0 +1,7 @@
+.board {
+  width: 400px;
+  height: 600px;
+  border: 1px solid #000000;
+  display: block;
+  margin: 0 auto;
+}
