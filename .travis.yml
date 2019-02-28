@@ -23,6 +23,16 @@ script:
   - yarn lint
   - yarn prod
 
+# deploy:
+#   provider: pages
+#   local-dir: ./dist/
+#   skip-cleanup: false
+#   github-token: $GH_TOKEN
+#   keep-history: false
+#   verbose: true
+#   on:
+#     branch: master
+
 notifications:
   email:
     on_success: never
