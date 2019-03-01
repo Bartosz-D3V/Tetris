@@ -1,58 +1,58 @@
-const webpack = require("webpack");
-const autoprefixer = require("autoprefixer");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: ["./src/index", "./index.html"],
-  mode: "development",
-  devtool: "cheap-module-source-map",
+  entry: ['./src/index', './index.html'],
+  mode: 'development',
+  devtool: 'cheap-module-source-map',
   watch: true,
   output: {
-    filename: "./bundle.js"
+    filename: './bundle.js',
   },
   devServer: {
     hot: true,
     inline: true,
-    host: "localhost",
+    host: 'localhost',
     port: 8080,
     watchOptions: {
-      poll: true
-    }
+      poll: true,
+    },
   },
   module: {
     rules: [
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader",
+            loader: 'style-loader',
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           },
-          { loader: "css-loader" },
+          { loader: 'css-loader' },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
-              plugins: () => [autoprefixer]
-            }
-          }
-        ]
+              plugins: () => [autoprefixer],
+            },
+          },
+        ],
       },
-      { test: /\.html$/, loader: "html-loader" }
-    ]
+      { test: /\.html$/, loader: 'html-loader' },
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./index.html",
-      filename: "index.html",
-      minify: false
+      template: './index.html',
+      filename: 'index.html',
+      minify: false,
     }),
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 };
