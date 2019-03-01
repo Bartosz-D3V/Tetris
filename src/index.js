@@ -1,8 +1,8 @@
-import "../style/manifest.css";
-import { cols, rows } from "./constants";
+import '../style/manifest.css';
+import { cols, rows } from './constants';
 
-const canvas = document.getElementById("board");
-const ctx = canvas.getContext("2d");
+const canvas = document.getElementById('board');
+const ctx = canvas.getContext('2d');
 const { clientWidth, clientHeight } = canvas;
 const BLOCK_WIDTH = clientWidth / cols;
 const BLOCK_HEIGHT = clientHeight / rows;
@@ -21,7 +21,7 @@ const drawBoard = () => {
   drawBlock(0, 0);
 };
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   setCanvasSize();
   drawBoard();
 });

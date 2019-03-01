@@ -1,13 +1,13 @@
-const autoprefixer = require("autoprefixer");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const autoprefixer = require('autoprefixer');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: ["./src/index", "./index.html"],
-  mode: "production",
-  devtool: "none",
+  entry: ['./src/index', './index.html'],
+  mode: 'production',
+  devtool: 'none',
   watch: false,
   output: {
-    filename: "./bundle.js"
+    filename: './bundle.js',
   },
   module: {
     rules: [
@@ -15,52 +15,52 @@ module.exports = {
         test: /\.(js)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            sourceMap: false
-          }
-        }
+            sourceMap: false,
+          },
+        },
       },
       {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader",
+            loader: 'style-loader',
             options: {
-              sourceMap: false
-            }
+              sourceMap: false,
+            },
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
-              sourceMap: false
-            }
+              sourceMap: false,
+            },
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               plugins: () => [autoprefixer],
               options: {
-                sourceMap: false
-              }
-            }
-          }
-        ]
+                sourceMap: false,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.html$/,
-        loader: "html-loader",
+        loader: 'html-loader',
         options: {
-          minimize: true
-        }
-      }
-    ]
+          minimize: true,
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./index.html",
-      filename: "index.html",
-      minify: true
-    })
-  ]
+      template: './index.html',
+      filename: 'index.html',
+      minify: true,
+    }),
+  ],
 };
