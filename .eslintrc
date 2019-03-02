@@ -8,6 +8,7 @@
     "node": true
   },
   "rules": {
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "no-plusplus": "off"
   }
 }

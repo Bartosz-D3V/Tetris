@@ -53,6 +53,5 @@ window.addEventListener('load', () => {
   setGlobalState();
   setCanvasSize();
   drawBoard();
-  console.log(globalState);
   window.setInterval(recalculateTetroState, 1000);
 });
