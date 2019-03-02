@@ -1,30 +1,19 @@
 import '../style/manifest.css';
-import getNextTetromino from './helpers';
+import { getNextTetromino, drawTetromino } from './helpers';
 import { cols, rows } from './constants';
+import { clientHeight, clientWidth, BLOCK_HEIGHT } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
-const { clientWidth, clientHeight } = canvas;
-const BLOCK_WIDTH = clientWidth / cols;
-const BLOCK_HEIGHT = clientHeight / rows;
 
 const setCanvasSize = () => {
   canvas.width = clientWidth;
   canvas.height = clientHeight;
 };
 
-const drawBlock = (x, y) => {
-  ctx.fillRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
-  ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
-};
-
-const drawBoard = () => {
-  drawBlock(0, 0);
-};
-
 const globalState = [];
 
-const setGlobalState = () => {
+const resetGlobalState = () => {
   for (let i = 0; i < rows; i++) {
     globalState.push([]);
     for (let j = 0; j < cols; j++) {
@@ -34,7 +23,7 @@ const setGlobalState = () => {
 };
 
 const tetroState = {
-  posX: 0,
+  posX: 4,
   posY: 0,
   landed: false,
   tetromino: null,
@@ -47,11 +36,12 @@ const recalculateTetroState = () => {
   if (!tetroState.tetromino) {
     tetroState.tetromino = getNextTetromino();
   }
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawTetromino(ctx, tetroState.posX, tetroState.posY, 0xcc00);
 };
 
 window.addEventListener('load', () => {
-  setGlobalState();
+  resetGlobalState();
   setCanvasSize();
-  drawBoard();
   window.setInterval(recalculateTetroState, 1000);
 });
