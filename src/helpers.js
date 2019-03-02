@@ -6,7 +6,7 @@ const getShapes = () => {
 
 let shapes = getShapes();
 
-export const getNextTetromino = () => {
+export default () => {
   if (!shapes.length) {
     shapes = getShapes();
   }

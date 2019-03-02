@@ -1,5 +1,5 @@
 import '../style/manifest.css';
-import { getNextTetromino } from './helpers';
+import getNextTetromino from './helpers';
 import { cols, rows } from './constants';
 
 const canvas = document.getElementById('board');
@@ -23,6 +23,7 @@ const drawBoard = () => {
 };
 
 window.addEventListener('load', () => {
+  getNextTetromino();
   setCanvasSize();
   drawBoard();
 });
