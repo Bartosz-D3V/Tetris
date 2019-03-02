@@ -22,8 +22,36 @@ const drawBoard = () => {
   drawBlock(0, 0);
 };
 
+const globalState = [];
+
+const setGlobalState = () => {
+  for (let i = 0; i < rows; i++) {
+    globalState.push([]);
+    for (let j = 0; j < cols; j++) {
+      globalState[i].push(0);
+    }
+  }
+};
+
+const tetroState = {
+  posX: 0,
+  posY: 0,
+  landed: false,
+  tetromino: null,
+};
+
+const recalculateTetroState = () => {
+  if (tetroState.posY < clientHeight - BLOCK_HEIGHT) {
+    tetroState.posY++;
+  }
+  if (!tetroState.tetromino) {
+    tetroState.tetromino = getNextTetromino();
+  }
+};
+
 window.addEventListener('load', () => {
-  getNextTetromino();
+  setGlobalState();
   setCanvasSize();
   drawBoard();
+  window.setInterval(recalculateTetroState, 1000);
 });
