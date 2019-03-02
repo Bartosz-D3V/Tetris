@@ -1,4 +1,5 @@
 import '../style/manifest.css';
+import { getNextTetromino } from './helpers';
 import { cols, rows } from './constants';
 
 const canvas = document.getElementById('board');
