@@ -24,7 +24,7 @@ export const drawBlock = (ctx, x, y) => {
 export const drawTetromino = (ctx, x, y, block) => {
   let row = 0;
   let col = 0;
-  for (let bit = 0x8000; bit > 0; bit = bit >> 1) {
+  for (let bit = 0x8000; bit > 0; bit >>= 1) {
     if (++col === 4) {
       ++row;
       col = 0;

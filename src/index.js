@@ -1,7 +1,6 @@
 import '../style/manifest.css';
 import { getNextTetromino, drawTetromino } from './helpers';
-import { cols, rows } from './constants';
-import { clientHeight, clientWidth, BLOCK_HEIGHT } from './constants';
+import { cols, rows, clientHeight, clientWidth, BLOCK_HEIGHT } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
