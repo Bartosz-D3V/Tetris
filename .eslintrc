@@ -9,6 +9,7 @@
   },
   "rules": {
     "linebreak-style": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "no-bitwise": "off"
   }
 }

@@ -1,5 +1,10 @@
+const canvas = document.getElementById('board');
+
 export const cols = 10;
 export const rows = 20;
+export const { clientWidth, clientHeight } = canvas;
+export const BLOCK_WIDTH = clientWidth / cols;
+export const BLOCK_HEIGHT = clientHeight / rows;
 export const tetrominos = [
   { shape: 'i', blocks: [0x0f00, 0x2222, 0x00f0, 0x4444], color: 'cyan' },
   { shape: 'j', blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20], color: 'blue' },
