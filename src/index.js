@@ -1,6 +1,6 @@
 import '../style/manifest.css';
-import { getNextTetromino, drawTetromino } from './helpers';
-import { cols, rows, clientHeight, clientWidth, BLOCK_HEIGHT } from './constants';
+import { getNextTetromino, drawTetromino, landing } from './helpers';
+import { cols, rows, clientHeight, clientWidth } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -26,17 +26,22 @@ const tetroState = {
   posY: 0,
   landed: false,
   tetromino: null,
+  block: null,
 };
 
 const recalculateTetroState = () => {
-  if (tetroState.posY < clientHeight - BLOCK_HEIGHT) {
+  console.log(!landing(tetroState, globalState));
+  if (!landing(tetroState, globalState)) {
     tetroState.posY++;
+  } else {
+    tetroState.landed = true;
   }
   if (!tetroState.tetromino) {
     tetroState.tetromino = getNextTetromino();
+    tetroState.block = tetroState.tetromino.blocks[0];
   }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawTetromino(ctx, tetroState.posX, tetroState.posY, 0xcc00);
+  drawTetromino(ctx, tetroState.posX, tetroState.posY, tetroState.block);
 };
 
 window.addEventListener('load', () => {
