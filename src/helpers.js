@@ -17,39 +17,36 @@ export const drawBlock = (ctx, x, y) => {
   ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
 };
 
-export const drawTetromino = (ctx, x, y, block) => {
+const getBlocksPos = block => {
   let row = 0;
   let col = 0;
+  const blockPos = [];
   for (let bit = 0x8000; bit > 0; bit >>= 1) {
     if (++row === 4) {
       ++col;
       row = 0;
     }
-    ctx.strokeRect(x * BLOCK_WIDTH, y * BLOCK_HEIGHT, BLOCK_WIDTH * 4, BLOCK_HEIGHT * 4);
     if (bit & block) {
-      drawBlock(ctx, row + x, col + y);
+      blockPos.push({ row, col });
     }
+  }
+  return blockPos;
+};
+
+export const drawTetromino = (ctx, x, y, block) => {
+  for (let { row, col } of getBlocksPos(block)) {
+    drawBlock(ctx, col + x, row + y);
   }
 };
 
 export const landing = (tetroState, globalState) => {
-  const { landed, posX, posY } = tetroState;
+  const { landed, posX, posY, block } = tetroState;
   if (landed) return true;
-  let row = 0;
-  let col = 0;
-  const blocks = [];
-  for (let bit = 0x8000; bit > 0; bit >>= 1) {
-    if (++col === 4) {
-      ++row;
-      col = 0;
-    }
-    if (bit & tetroState.block) {
-      blocks.push({ row, col });
-    }
-  }
+  const blocks = getBlocksPos(block);
   for (let { row, col } of blocks) {
     const nextPos =
       globalState[row + posY + 1] !== undefined ? globalState[row + posY + 1][col + posX] : null;
     if (nextPos !== 0) return true;
   }
+  return false;
 };

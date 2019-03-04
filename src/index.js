@@ -30,7 +30,6 @@ const tetroState = {
 };
 
 const recalculateTetroState = () => {
-  console.log(!landing(tetroState, globalState));
   if (!landing(tetroState, globalState)) {
     tetroState.posY++;
   } else {
