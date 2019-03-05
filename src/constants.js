@@ -14,3 +14,6 @@ export const tetrominos = [
   { shape: 't', blocks: [0x0e40, 0x4c40, 0x4e00, 0x4640], color: 'purple' },
   { shape: 'z', blocks: [0x0c60, 0x4c80, 0xc600, 0x2640], color: 'red' },
 ];
+
+export const KEY_LEFT = 37;
+export const KEY_RIGHT = 39;

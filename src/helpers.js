@@ -1,4 +1,4 @@
-import { BLOCK_HEIGHT, BLOCK_WIDTH, tetrominos } from './constants';
+import { BLOCK_HEIGHT, BLOCK_WIDTH, cols, tetrominos } from './constants';
 
 let shapes = tetrominos;
 
@@ -50,4 +50,24 @@ export const landing = (tetroState, globalState) => {
     if (nextPos !== 0) return true;
   }
   return false;
+};
+
+export const moveLeft = ({ posX, block }) => {
+  const minPosX = getBlocksPos(block)
+    .map(v => v.col)
+    .reduce((a, b) => Math.min(a, b));
+  if (posX + minPosX > 0) {
+    return posX - 1;
+  }
+  return posX;
+};
+
+export const moveRight = ({ posX, block }) => {
+  const maxPosX = getBlocksPos(block)
+    .map(v => v.col)
+    .reduce((a, b) => Math.max(a, b));
+  if (posX + maxPosX + 1 < cols) {
+    return posX + 1;
+  }
+  return posX;
 };
