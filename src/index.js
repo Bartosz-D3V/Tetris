@@ -37,7 +37,8 @@ const recalculateTetroState = () => {
   }
   if (!tetroState.tetromino) {
     tetroState.tetromino = getNextTetromino();
-    tetroState.block = tetroState.tetromino.blocks[0];
+    const [[block1]] = [tetroState.tetromino.blocks];
+    tetroState.block = block1;
   }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawTetromino(ctx, tetroState.posX, tetroState.posY, tetroState.block);

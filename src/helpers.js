@@ -34,16 +34,17 @@ const getBlocksPos = block => {
 };
 
 export const drawTetromino = (ctx, x, y, block) => {
-  for (let { row, col } of getBlocksPos(block)) {
+  getBlocksPos(block).forEach(({ row, col }) => {
     drawBlock(ctx, col + x, row + y);
-  }
+  });
 };
 
 export const landing = (tetroState, globalState) => {
   const { landed, posX, posY, block } = tetroState;
   if (landed) return true;
   const blocks = getBlocksPos(block);
-  for (let { row, col } of blocks) {
+  for (let i = 0; i < blocks.length; i++) {
+    const { row, col } = blocks[i];
     const nextPos =
       globalState[row + posY + 1] !== undefined ? globalState[row + posY + 1][col + posX] : null;
     if (nextPos !== 0) return true;
