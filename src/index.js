@@ -1,6 +1,6 @@
 import '../style/manifest.css';
-import { getNextTetromino, drawTetromino, landing } from './helpers';
-import { cols, rows, clientHeight, clientWidth } from './constants';
+import { getNextTetromino, drawTetromino, landing, moveLeft, moveRight } from './helpers';
+import { cols, rows, clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -12,6 +12,14 @@ const setCanvasSize = () => {
 
 const globalState = [];
 
+const tetroState = {
+  posX: 4,
+  posY: 0,
+  landed: false,
+  tetromino: null,
+  block: null,
+};
+
 const resetGlobalState = () => {
   for (let i = 0; i < rows; i++) {
     globalState.push([]);
@@ -19,14 +27,6 @@ const resetGlobalState = () => {
       globalState[i].push(0);
     }
   }
-};
-
-const tetroState = {
-  posX: 4,
-  posY: 0,
-  landed: false,
-  tetromino: null,
-  block: null,
 };
 
 const recalculateTetroState = () => {
@@ -47,5 +47,13 @@ const recalculateTetroState = () => {
 window.addEventListener('load', () => {
   resetGlobalState();
   setCanvasSize();
-  window.setInterval(recalculateTetroState, 1000);
+  window.setInterval(recalculateTetroState, 600);
+});
+
+window.addEventListener('keydown', event => {
+  if (event.keyCode === KEY_LEFT) {
+    tetroState.posX = moveLeft(tetroState);
+  } else if (event.keyCode === KEY_RIGHT) {
+    tetroState.posX = moveRight(tetroState);
+  }
 });
