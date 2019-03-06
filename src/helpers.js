@@ -52,21 +52,21 @@ export const landing = (tetroState, globalState) => {
   return false;
 };
 
-export const moveLeft = ({ posX, block }) => {
+export const moveLeft = ({ posX, block, landed }) => {
   const minPosX = getBlocksPos(block)
     .map(v => v.col)
     .reduce((a, b) => Math.min(a, b));
-  if (posX + minPosX > 0) {
+  if (!landed && posX + minPosX > 0) {
     return posX - 1;
   }
   return posX;
 };
 
-export const moveRight = ({ posX, block }) => {
+export const moveRight = ({ posX, block, landed }) => {
   const maxPosX = getBlocksPos(block)
     .map(v => v.col)
     .reduce((a, b) => Math.max(a, b));
-  if (posX + maxPosX + 1 < cols) {
+  if (!landed && posX + maxPosX + 1 < cols) {
     return posX + 1;
   }
   return posX;
