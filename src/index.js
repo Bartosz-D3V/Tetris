@@ -1,5 +1,13 @@
 import '../style/manifest.css';
-import { getNextTetromino, drawTetromino, landing, moveLeft, moveRight } from './helpers';
+import {
+  getNextTetromino,
+  drawTetromino,
+  drawGlobalState,
+  landing,
+  moveLeft,
+  moveRight,
+  getBlocksPos,
+} from './helpers';
 import { cols, rows, clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT } from './constants';
 
 const canvas = document.getElementById('board');
@@ -33,21 +41,28 @@ const recalculateTetroState = () => {
   if (!landing(tetroState, globalState)) {
     tetroState.posY++;
   } else {
+    getBlocksPos(tetroState.block).forEach(({ row, col }) => {
+      globalState[tetroState.posY + row][tetroState.posX + col] = 1;
+    });
     tetroState.landed = true;
+    tetroState.tetromino = null;
   }
   if (!tetroState.tetromino) {
+    tetroState.landed = false;
     tetroState.tetromino = getNextTetromino();
+    tetroState.posY = 0;
     const [[block1]] = [tetroState.tetromino.blocks];
     tetroState.block = block1;
   }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawGlobalState(ctx, globalState);
   drawTetromino(ctx, tetroState.posX, tetroState.posY, tetroState.block);
 };
 
 window.addEventListener('load', () => {
   resetGlobalState();
   setCanvasSize();
-  window.setInterval(recalculateTetroState, 600);
+  window.setInterval(recalculateTetroState, 500);
 });
 
 window.addEventListener('keydown', event => {

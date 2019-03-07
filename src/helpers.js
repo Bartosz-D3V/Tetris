@@ -1,10 +1,10 @@
 import { BLOCK_HEIGHT, BLOCK_WIDTH, cols, tetrominos } from './constants';
 
-let shapes = tetrominos;
+let shapes = [...tetrominos];
 
 export const getNextTetromino = () => {
   if (!shapes.length) {
-    shapes = tetrominos;
+    shapes = [...tetrominos];
   }
   const index = Math.floor(Math.random() * shapes.length);
   const shape = shapes[index];
@@ -17,7 +17,7 @@ export const drawBlock = (ctx, x, y) => {
   ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
 };
 
-const getBlocksPos = block => {
+export const getBlocksPos = block => {
   let row = 0;
   let col = 0;
   const blockPos = [];
@@ -37,6 +37,16 @@ export const drawTetromino = (ctx, x, y, block) => {
   getBlocksPos(block).forEach(({ row, col }) => {
     drawBlock(ctx, col + x, row + y);
   });
+};
+
+export const drawGlobalState = (ctx, globalState) => {
+  for (let i = 0; i < globalState.length; i++) {
+    for (let j = 0; j < globalState[i].length; j++) {
+      if (globalState[i][j] === 1) {
+        drawBlock(ctx, j, i);
+      }
+    }
+  }
 };
 
 export const landing = (tetroState, globalState) => {
