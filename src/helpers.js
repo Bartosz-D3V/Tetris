@@ -1,4 +1,4 @@
-import { BLOCK_HEIGHT, BLOCK_WIDTH, cols, tetrominos } from './constants';
+import { BLOCK_HEIGHT, BLOCK_WIDTH, cols, rows, tetrominos } from './constants';
 
 let shapes = [...tetrominos];
 
@@ -12,7 +12,8 @@ export const getNextTetromino = () => {
   return shape;
 };
 
-export const drawBlock = (ctx, x, y) => {
+export const drawBlock = (ctx, x, y, color = 'black') => {
+  ctx.fillStyle = color;
   ctx.fillRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
   ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
 };
@@ -33,19 +34,16 @@ export const getBlocksPos = block => {
   return blockPos;
 };
 
-export const drawTetromino = (ctx, x, y, block) => {
+export const drawTetromino = (ctx, x, y, block, color = 'black') => {
   getBlocksPos(block).forEach(({ row, col }) => {
-    drawBlock(ctx, col + x, row + y);
+    drawBlock(ctx, col + x, row + y, color);
   });
 };
 
 export const drawGlobalState = (ctx, globalState) => {
   for (let i = 0; i < globalState.length; i++) {
-    for (let j = 0; j < globalState[i].length; j++) {
-      if (globalState[i][j] === 1) {
-        drawBlock(ctx, j, i);
-      }
-    }
+    const block = globalState[i];
+    drawBlock(ctx, block.posX, block.posY, block.tetromino.color);
   }
 };
 
@@ -55,9 +53,8 @@ export const landing = (tetroState, globalState) => {
   const blocks = getBlocksPos(block);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
-    const nextPos =
-      globalState[row + posY + 1] !== undefined ? globalState[row + posY + 1][col + posX] : null;
-    if (nextPos !== 0) return true;
+    const nextPos = globalState.find(v => v.posX === col + posX && v.posY === row + posY + 1);
+    if (nextPos || row + posY + 1 >= rows) return true;
   }
   return false;
 };

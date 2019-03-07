@@ -8,7 +8,7 @@ import {
   moveRight,
   getBlocksPos,
 } from './helpers';
-import { cols, rows, clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT } from './constants';
+import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -29,12 +29,7 @@ const tetroState = {
 };
 
 const resetGlobalState = () => {
-  for (let i = 0; i < rows; i++) {
-    globalState.push([]);
-    for (let j = 0; j < cols; j++) {
-      globalState[i].push(0);
-    }
-  }
+  globalState.length = 0;
 };
 
 const recalculateTetroState = () => {
@@ -42,7 +37,11 @@ const recalculateTetroState = () => {
     tetroState.posY++;
   } else {
     getBlocksPos(tetroState.block).forEach(({ row, col }) => {
-      globalState[tetroState.posY + row][tetroState.posX + col] = 1;
+      globalState.push({
+        tetromino: tetroState.tetromino,
+        posX: tetroState.posX + col,
+        posY: tetroState.posY + row,
+      });
     });
     tetroState.landed = true;
     tetroState.tetromino = null;
@@ -51,12 +50,19 @@ const recalculateTetroState = () => {
     tetroState.landed = false;
     tetroState.tetromino = getNextTetromino();
     tetroState.posY = 0;
+    tetroState.posX = 4;
     const [[block1]] = [tetroState.tetromino.blocks];
     tetroState.block = block1;
   }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawGlobalState(ctx, globalState);
-  drawTetromino(ctx, tetroState.posX, tetroState.posY, tetroState.block);
+  drawTetromino(
+    ctx,
+    tetroState.posX,
+    tetroState.posY,
+    tetroState.block,
+    tetroState.tetromino.color
+  );
 };
 
 window.addEventListener('load', () => {
