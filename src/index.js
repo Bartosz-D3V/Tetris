@@ -33,28 +33,7 @@ const resetGlobalState = () => {
   globalState.length = 0;
 };
 
-const recalculateTetroState = () => {
-  if (!landing(tetroState, globalState)) {
-    tetroState.posY++;
-  } else {
-    getBlocksPos(tetroState.block).forEach(({ row, col }) => {
-      globalState.push({
-        tetromino: tetroState.tetromino,
-        posX: tetroState.posX + col,
-        posY: tetroState.posY + row,
-      });
-    });
-    tetroState.landed = true;
-    tetroState.tetromino = null;
-  }
-  if (!tetroState.tetromino) {
-    tetroState.landed = false;
-    tetroState.tetromino = getNextTetromino();
-    tetroState.posY = 0;
-    tetroState.posX = 4;
-    const [[block1]] = [tetroState.tetromino.blocks];
-    tetroState.block = block1;
-  }
+const redrawBoard = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawGlobalState(ctx, globalState);
   drawTetromino(
@@ -66,10 +45,43 @@ const recalculateTetroState = () => {
   );
 };
 
+const resetTetroState = () => {
+  tetroState.landed = false;
+  tetroState.tetromino = getNextTetromino();
+  tetroState.posY = 0;
+  tetroState.posX = 4;
+  const [[block1]] = [tetroState.tetromino.blocks];
+  tetroState.block = block1;
+};
+
+const dockTetromino = () => {
+  getBlocksPos(tetroState.block).forEach(({ row, col }) => {
+    globalState.push({
+      tetromino: tetroState.tetromino,
+      posX: tetroState.posX + col,
+      posY: tetroState.posY + row,
+    });
+  });
+  tetroState.landed = true;
+  tetroState.tetromino = null;
+};
+
+const recalculateGameState = () => {
+  if (!landing(tetroState, globalState)) {
+    tetroState.posY++;
+  } else {
+    dockTetromino();
+  }
+  if (!tetroState.tetromino) {
+    resetTetroState();
+  }
+  redrawBoard();
+};
+
 window.addEventListener('load', () => {
   resetGlobalState();
   setCanvasSize();
-  window.setInterval(recalculateTetroState, 500);
+  window.setInterval(recalculateGameState, 500);
 });
 
 window.addEventListener('keydown', event => {
