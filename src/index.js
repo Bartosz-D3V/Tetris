@@ -7,8 +7,9 @@ import {
   moveLeft,
   moveRight,
   getBlocksPos,
+  getNextBlock,
 } from './helpers';
-import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT } from './constants';
+import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -76,5 +77,7 @@ window.addEventListener('keydown', event => {
     tetroState.posX = moveLeft(tetroState);
   } else if (event.keyCode === KEY_RIGHT) {
     tetroState.posX = moveRight(tetroState);
+  } else if (event.keyCode === KEY_SPACE) {
+    tetroState.block = getNextBlock(tetroState);
   }
 });

@@ -78,3 +78,7 @@ export const moveRight = ({ posX, block, landed }) => {
   }
   return posX;
 };
+
+export const getNextBlock = ({ block, tetromino }) => {
+  return tetromino.blocks[(tetromino.blocks.indexOf(block) + 1) % tetromino.blocks.length];
+};
