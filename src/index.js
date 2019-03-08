@@ -86,9 +86,9 @@ window.addEventListener('load', () => {
 
 window.addEventListener('keydown', event => {
   if (event.keyCode === KEY_LEFT) {
-    tetroState.posX = moveLeft(tetroState);
+    tetroState.posX = moveLeft(tetroState, globalState);
   } else if (event.keyCode === KEY_RIGHT) {
-    tetroState.posX = moveRight(tetroState);
+    tetroState.posX = moveRight(tetroState, globalState);
   } else if (event.keyCode === KEY_SPACE) {
     tetroState.block = getNextBlock(tetroState);
   }
