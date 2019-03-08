@@ -59,21 +59,39 @@ export const landing = (tetroState, globalState) => {
   return false;
 };
 
-export const moveLeft = ({ posX, block, landed }) => {
-  const minPosX = getBlocksPos(block)
-    .map(v => v.col)
-    .reduce((a, b) => Math.min(a, b));
-  if (!landed && posX + minPosX > 0) {
+const canMoveLeft = (tetroState, globalState) => {
+  const { posX, posY, block } = tetroState;
+  const blocks = getBlocksPos(block);
+  for (let i = 0; i < blocks.length; i++) {
+    const { row, col } = blocks[i];
+    const nextPos = globalState.find(v => v.posX === col + posX - 1 && v.posY === row + posY + 1);
+    if (nextPos || col + posX - 1 < 0) return false;
+  }
+  return true;
+};
+
+export const moveLeft = (tetroState, globalState) => {
+  const { posX } = tetroState;
+  if (canMoveLeft(tetroState, globalState)) {
     return posX - 1;
   }
   return posX;
 };
 
-export const moveRight = ({ posX, block, landed }) => {
-  const maxPosX = getBlocksPos(block)
-    .map(v => v.col)
-    .reduce((a, b) => Math.max(a, b));
-  if (!landed && posX + maxPosX + 1 < cols) {
+const canMoveRight = (tetroState, globalState) => {
+  const { posX, posY, block } = tetroState;
+  const blocks = getBlocksPos(block);
+  for (let i = 0; i < blocks.length; i++) {
+    const { row, col } = blocks[i];
+    const nextPos = globalState.find(v => v.posX === col + posX + 1 && v.posY === row + posY + 1);
+    if (nextPos || col + posX + 1 >= cols) return false;
+  }
+  return true;
+};
+
+export const moveRight = (tetroState, globalState) => {
+  const { posX } = tetroState;
+  if (canMoveRight(tetroState, globalState)) {
     return posX + 1;
   }
   return posX;
