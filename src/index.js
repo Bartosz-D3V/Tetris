@@ -8,6 +8,7 @@ import {
   moveRight,
   getBlocksPos,
   rotate,
+  clearLines,
 } from './helpers';
 import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
@@ -19,7 +20,7 @@ const setCanvasSize = () => {
   canvas.height = clientHeight;
 };
 
-const globalState = [];
+let globalState = [];
 
 const tetroState = {
   posX: 4,
@@ -71,6 +72,7 @@ const recalculateGameState = () => {
     tetroState.posY++;
   } else {
     dockTetromino();
+    globalState = clearLines(ctx, globalState);
   }
   if (!tetroState.tetromino) {
     resetTetroState();
