@@ -117,3 +117,14 @@ export const rotate = (tetroState, globalState) => {
   }
   return block;
 };
+
+export const clearLines = (ctx, globalState) => {
+  let newGlobalState = [...globalState];
+  for (let i = 0; i < rows; i++) {
+    const blocksInRow = newGlobalState.filter(v => v.posY === i);
+    if (blocksInRow.length === cols) {
+      newGlobalState = newGlobalState.filter(v => v.posY !== i);
+    }
+  }
+  return newGlobalState;
+};

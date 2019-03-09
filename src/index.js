@@ -8,6 +8,7 @@ import {
   moveRight,
   getBlocksPos,
   rotate,
+  clearLines,
 } from './helpers';
 import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
@@ -71,6 +72,7 @@ const recalculateGameState = () => {
     tetroState.posY++;
   } else {
     dockTetromino();
+    globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
   }
   if (!tetroState.tetromino) {
     resetTetroState();
