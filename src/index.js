@@ -20,7 +20,7 @@ const setCanvasSize = () => {
   canvas.height = clientHeight;
 };
 
-let globalState = [];
+const globalState = [];
 
 const tetroState = {
   posX: 4,
@@ -72,7 +72,7 @@ const recalculateGameState = () => {
     tetroState.posY++;
   } else {
     dockTetromino();
-    globalState = clearLines(ctx, globalState);
+    globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
   }
   if (!tetroState.tetromino) {
     resetTetroState();
