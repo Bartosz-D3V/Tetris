@@ -97,6 +97,23 @@ export const moveRight = (tetroState, globalState) => {
   return posX;
 };
 
-export const getNextBlock = ({ block, tetromino }) => {
-  return tetromino.blocks[(tetromino.blocks.indexOf(block) + 1) % tetromino.blocks.length];
+const canRotate = (tetroState, nextBlock, globalState) => {
+  const { posX, posY } = tetroState;
+  const blocks = getBlocksPos(nextBlock);
+  for (let i = 0; i < blocks.length; i++) {
+    const { row, col } = blocks[i];
+    const nextPos = globalState.find(v => v.posX === col + posX && v.posY === row + posY);
+    if (nextPos || col + posX >= cols || col + posX < 0) return false;
+  }
+  return true;
+};
+
+export const rotate = (tetroState, globalState) => {
+  const { block, tetromino } = tetroState;
+  const nextBlock =
+    tetromino.blocks[(tetromino.blocks.indexOf(block) + 1) % tetromino.blocks.length];
+  if (canRotate(tetroState, nextBlock, globalState)) {
+    return nextBlock;
+  }
+  return block;
 };

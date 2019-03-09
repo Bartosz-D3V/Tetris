@@ -7,7 +7,7 @@ import {
   moveLeft,
   moveRight,
   getBlocksPos,
-  getNextBlock,
+  rotate,
 } from './helpers';
 import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
@@ -90,6 +90,6 @@ window.addEventListener('keydown', event => {
   } else if (event.keyCode === KEY_RIGHT) {
     tetroState.posX = moveRight(tetroState, globalState);
   } else if (event.keyCode === KEY_SPACE) {
-    tetroState.block = getNextBlock(tetroState);
+    tetroState.block = rotate(tetroState, globalState);
   }
 });
