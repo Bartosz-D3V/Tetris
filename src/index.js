@@ -9,6 +9,7 @@ import {
   getBlocksPos,
   rotate,
   clearLines,
+  pushDownBlocks,
 } from './helpers';
 import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
@@ -67,12 +68,21 @@ const dockTetromino = () => {
   tetroState.tetromino = null;
 };
 
+const removeFilledLines = () => {
+  globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
+};
+
+const moveDownBlocks = () => {
+  // globalState.splice(0, globalState.length, ...pushDownBlocks(globalState));
+};
+
 const recalculateGameState = () => {
   if (!landing(tetroState, globalState)) {
     tetroState.posY++;
   } else {
     dockTetromino();
-    globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
+    removeFilledLines();
+    moveDownBlocks();
   }
   if (!tetroState.tetromino) {
     resetTetroState();

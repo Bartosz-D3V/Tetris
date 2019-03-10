@@ -121,10 +121,23 @@ export const rotate = (tetroState, globalState) => {
 export const clearLines = (ctx, globalState) => {
   let newGlobalState = [...globalState];
   for (let i = 0; i < rows; i++) {
-    const blocksInRow = newGlobalState.filter(v => v.posY === i);
+    const blocksInRow = globalState.filter(v => v.posY === i);
     if (blocksInRow.length === cols) {
-      newGlobalState = newGlobalState.filter(v => v.posY !== i);
+      newGlobalState = globalState.filter(v => v.posY !== i);
+      pushDownBlocks(newGlobalState);
     }
+  }
+  return newGlobalState;
+};
+
+export const pushDownBlocks = globalState => {
+  let newGlobalState = [...globalState];
+  for (let i = 0; i < newGlobalState.length; i++) {
+    const blocksInCol = newGlobalState.filter(
+      v => v.posX === globalState[i].posX && v !== globalState[i]
+    );
+    const maxBlockInCol = Math.max(...blocksInCol.map(v => v.posY));
+    globalState[i].posY = !!maxBlockInCol ? rows - 1 : maxBlockInCol - 1;
   }
   return newGlobalState;
 };
