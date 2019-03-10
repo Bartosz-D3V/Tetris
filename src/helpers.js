@@ -119,9 +119,11 @@ export const rotate = (tetroState, globalState) => {
 };
 
 const pushDownBlocks = blocks => {
-  for (let i = 0; i < blocks.length; i++) {
-    blocks[i].posY++;
+  const loweredBlocks = blocks;
+  for (let i = 0; i < loweredBlocks.length; i++) {
+    loweredBlocks[i].posY++;
   }
+  return loweredBlocks;
 };
 
 export const clearLines = (ctx, globalState) => {
