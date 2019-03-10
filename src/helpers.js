@@ -118,12 +118,22 @@ export const rotate = (tetroState, globalState) => {
   return block;
 };
 
+const pushDownBlocks = blocks => {
+  const loweredBlocks = blocks;
+  for (let i = 0; i < loweredBlocks.length; i++) {
+    loweredBlocks[i].posY++;
+  }
+  return loweredBlocks;
+};
+
 export const clearLines = (ctx, globalState) => {
   let newGlobalState = [...globalState];
   for (let i = 0; i < rows; i++) {
     const blocksInRow = newGlobalState.filter(v => v.posY === i);
     if (blocksInRow.length === cols) {
       newGlobalState = newGlobalState.filter(v => v.posY !== i);
+      const blocks = newGlobalState.filter(v => v.posY < i);
+      pushDownBlocks(blocks);
     }
   }
   return newGlobalState;

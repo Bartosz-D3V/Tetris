@@ -67,12 +67,16 @@ const dockTetromino = () => {
   tetroState.tetromino = null;
 };
 
+const removeFilledLines = () => {
+  globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
+};
+
 const recalculateGameState = () => {
   if (!landing(tetroState, globalState)) {
     tetroState.posY++;
   } else {
     dockTetromino();
-    globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
+    removeFilledLines();
   }
   if (!tetroState.tetromino) {
     resetTetroState();
