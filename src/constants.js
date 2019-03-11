@@ -15,6 +15,7 @@ export const tetrominos = [
   { shape: 'z', blocks: [0x0c60, 0x4c80, 0xc600, 0x2640], color: 'red' },
 ];
 
+export const KEY_UP = 38;
 export const KEY_LEFT = 37;
 export const KEY_RIGHT = 39;
 export const KEY_DOWN = 40;

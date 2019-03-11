@@ -42,6 +42,11 @@ export const getBlocksPos = block => {
   return blockPos;
 };
 
+const getTetroHeight = tetroState => {
+  const blocks = getBlocksPos(tetroState.block);
+  return Math.max(...blocks.map(v => v.row)) - Math.min(...blocks.map(v => v.row)) + 1;
+};
+
 export const drawTetromino = (ctx, x, y, block, color = 'black') => {
   getBlocksPos(block).forEach(({ row, col }) => {
     drawBlock(ctx, col + x, row + y, color);
@@ -135,6 +140,16 @@ const canRotate = (tetroState, nextBlock, boardState) => {
   return true;
 };
 
+export const drop = (tetroState, boardState) => {
+  const posXs = getBlocksPos(tetroState.block)
+    .map(v => v.col)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .map(v => v + tetroState.posX);
+  const dropPosXs = boardState.filter(v => posXs.includes(v.posX));
+  const minPosY = Math.min(...dropPosXs.map(v => v.posY), 19);
+  return minPosY - getTetroHeight(tetroState) - 1;
+};
+
 export const rotate = (tetroState, boardState) => {
   const { block, tetromino } = tetroState;
   const nextBlock =
@@ -164,11 +179,6 @@ export const clearLines = (ctx, boardState) => {
     }
   }
   return newboardState;
-};
-
-const getTetroHeight = tetroState => {
-  const blocks = getBlocksPos(tetroState.block);
-  return Math.max(...blocks.map(v => v.row)) - Math.min(...blocks.map(v => v.row)) + 1;
 };
 
 export const isGameOver = (tetroState, boardState) => {
