@@ -40,79 +40,79 @@ export const drawTetromino = (ctx, x, y, block, color = 'black') => {
   });
 };
 
-export const drawGlobalState = (ctx, globalState) => {
-  for (let i = 0; i < globalState.length; i++) {
-    const block = globalState[i];
+export const drawboardState = (ctx, boardState) => {
+  for (let i = 0; i < boardState.length; i++) {
+    const block = boardState[i];
     drawBlock(ctx, block.posX, block.posY, block.tetromino.color);
   }
 };
 
-export const landing = (tetroState, globalState) => {
+export const landing = (tetroState, boardState) => {
   const { landed, posX, posY, block } = tetroState;
   if (landed) return true;
   const blocks = getBlocksPos(block);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
-    const nextPos = globalState.find(v => v.posX === col + posX && v.posY === row + posY + 1);
+    const nextPos = boardState.find(v => v.posX === col + posX && v.posY === row + posY + 1);
     if (nextPos || row + posY + 1 >= rows) return true;
   }
   return false;
 };
 
-const canMoveLeft = (tetroState, globalState) => {
+const canMoveLeft = (tetroState, boardState) => {
   const { posX, posY, block } = tetroState;
   const blocks = getBlocksPos(block);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
-    const nextPos = globalState.find(v => v.posX === col + posX - 1 && v.posY === row + posY + 1);
+    const nextPos = boardState.find(v => v.posX === col + posX - 1 && v.posY === row + posY + 1);
     if (nextPos || col + posX - 1 < 0) return false;
   }
   return true;
 };
 
-export const moveLeft = (tetroState, globalState) => {
+export const moveLeft = (tetroState, boardState) => {
   const { posX } = tetroState;
-  if (canMoveLeft(tetroState, globalState)) {
+  if (canMoveLeft(tetroState, boardState)) {
     return posX - 1;
   }
   return posX;
 };
 
-const canMoveRight = (tetroState, globalState) => {
+const canMoveRight = (tetroState, boardState) => {
   const { posX, posY, block } = tetroState;
   const blocks = getBlocksPos(block);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
-    const nextPos = globalState.find(v => v.posX === col + posX + 1 && v.posY === row + posY + 1);
+    const nextPos = boardState.find(v => v.posX === col + posX + 1 && v.posY === row + posY + 1);
     if (nextPos || col + posX + 1 >= cols) return false;
   }
   return true;
 };
 
-export const moveRight = (tetroState, globalState) => {
+export const moveRight = (tetroState, boardState) => {
   const { posX } = tetroState;
-  if (canMoveRight(tetroState, globalState)) {
+  if (canMoveRight(tetroState, boardState)) {
     return posX + 1;
   }
   return posX;
 };
 
-const canRotate = (tetroState, nextBlock, globalState) => {
+const canRotate = (tetroState, nextBlock, boardState) => {
   const { posX, posY } = tetroState;
   const blocks = getBlocksPos(nextBlock);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
-    const nextPos = globalState.find(v => v.posX === col + posX && v.posY === row + posY);
+    const nextPos = boardState.find(v => v.posX === col + posX && v.posY === row + posY);
     if (nextPos || col + posX >= cols || col + posX < 0) return false;
   }
   return true;
 };
 
-export const rotate = (tetroState, globalState) => {
+export const rotate = (tetroState, boardState) => {
   const { block, tetromino } = tetroState;
   const nextBlock =
     tetromino.blocks[(tetromino.blocks.indexOf(block) + 1) % tetromino.blocks.length];
-  if (canRotate(tetroState, nextBlock, globalState)) {
+  if (canRotate(tetroState, nextBlock, boardState)) {
     return nextBlock;
   }
   return block;
@@ -126,15 +126,15 @@ const pushDownBlocks = blocks => {
   return loweredBlocks;
 };
 
-export const clearLines = (ctx, globalState) => {
-  let newGlobalState = [...globalState];
+export const clearLines = (ctx, boardState) => {
+  let newboardState = [...boardState];
   for (let i = 0; i < rows; i++) {
-    const blocksInRow = newGlobalState.filter(v => v.posY === i);
+    const blocksInRow = newboardState.filter(v => v.posY === i);
     if (blocksInRow.length === cols) {
-      newGlobalState = newGlobalState.filter(v => v.posY !== i);
-      const blocks = newGlobalState.filter(v => v.posY < i);
+      newboardState = newboardState.filter(v => v.posY !== i);
+      const blocks = newboardState.filter(v => v.posY < i);
       pushDownBlocks(blocks);
     }
   }
-  return newGlobalState;
+  return newboardState;
 };
