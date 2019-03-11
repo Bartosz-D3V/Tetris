@@ -14,7 +14,7 @@
     "eslint": "eslint \"**/*.js\"",
     "stylelint": "stylelint --config ./.stylelintrc --color **/*.css",
     "lint-staged": "lint-staged --config .lintstagedrc",
-    "pretty": "prettier --write **/*.{js,css,json,md,yml}"
+    "pretty": "prettier --write **/*.{js,css,json,md,yml,html}"
   },
   "dependencies": {},
   "devDependencies": {
