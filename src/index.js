@@ -12,7 +12,7 @@ import {
   isGameOver,
   displayMessage,
 } from './helpers';
-import { clientHeight, clientWidth, ESC_SPACE, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
+import { clientHeight, clientWidth, KEY_ESC, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -113,7 +113,7 @@ window.addEventListener('keydown', event => {
     case KEY_SPACE:
       tetroState.block = rotate(tetroState, boardState);
       break;
-    case ESC_SPACE:
+    case KEY_ESC:
       globalState.paused = !globalState.paused;
       break;
     default:
