@@ -9,6 +9,8 @@ import {
   getBlocksPos,
   rotate,
   clearLines,
+  isGameOver,
+  displayMessage,
 } from './helpers';
 import { clientHeight, clientWidth, ESC_SPACE, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
@@ -28,7 +30,7 @@ const boardState = [];
 
 const tetroState = {
   posX: 4,
-  posY: 0,
+  posY: -1,
   landed: false,
   tetromino: null,
   block: null,
@@ -53,7 +55,7 @@ const redrawBoard = () => {
 const resetTetroState = () => {
   tetroState.landed = false;
   tetroState.tetromino = getNextTetromino();
-  tetroState.posY = 0;
+  tetroState.posY = -1;
   tetroState.posX = 4;
   const [[block1]] = [tetroState.tetromino.blocks];
   tetroState.block = block1;
@@ -86,6 +88,10 @@ const recalculateboardState = () => {
     resetTetroState();
   }
   redrawBoard();
+  if (isGameOver(tetroState, boardState)) {
+    globalState.paused = true;
+    displayMessage(ctx, 'Game Over!');
+  }
 };
 
 window.addEventListener('load', () => {
