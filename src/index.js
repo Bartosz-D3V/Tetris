@@ -2,7 +2,7 @@ import '../style/manifest.css';
 import {
   getNextTetromino,
   drawTetromino,
-  drawGlobalState,
+  drawboardState,
   landing,
   moveLeft,
   moveRight,
@@ -10,7 +10,7 @@ import {
   rotate,
   clearLines,
 } from './helpers';
-import { clientHeight, clientWidth, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
+import { clientHeight, clientWidth, ESC_SPACE, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -20,7 +20,11 @@ const setCanvasSize = () => {
   canvas.height = clientHeight;
 };
 
-const globalState = [];
+const globalState = {
+  paused: false,
+};
+
+const boardState = [];
 
 const tetroState = {
   posX: 4,
@@ -30,13 +34,13 @@ const tetroState = {
   block: null,
 };
 
-const resetGlobalState = () => {
-  globalState.length = 0;
+const resetboardState = () => {
+  boardState.length = 0;
 };
 
 const redrawBoard = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawGlobalState(ctx, globalState);
+  drawboardState(ctx, boardState);
   drawTetromino(
     ctx,
     tetroState.posX,
@@ -57,7 +61,7 @@ const resetTetroState = () => {
 
 const dockTetromino = () => {
   getBlocksPos(tetroState.block).forEach(({ row, col }) => {
-    globalState.push({
+    boardState.push({
       tetromino: tetroState.tetromino,
       posX: tetroState.posX + col,
       posY: tetroState.posY + row,
@@ -68,11 +72,11 @@ const dockTetromino = () => {
 };
 
 const removeFilledLines = () => {
-  globalState.splice(0, globalState.length, ...clearLines(ctx, globalState));
+  boardState.splice(0, boardState.length, ...clearLines(ctx, boardState));
 };
 
-const recalculateGameState = () => {
-  if (!landing(tetroState, globalState)) {
+const recalculateboardState = () => {
+  if (!landing(tetroState, boardState)) {
     tetroState.posY++;
   } else {
     dockTetromino();
@@ -85,17 +89,28 @@ const recalculateGameState = () => {
 };
 
 window.addEventListener('load', () => {
-  resetGlobalState();
+  resetboardState();
   setCanvasSize();
-  window.setInterval(recalculateGameState, 500);
+  window.setInterval(() => {
+    if (!globalState.paused) recalculateboardState();
+  }, 500);
 });
 
 window.addEventListener('keydown', event => {
-  if (event.keyCode === KEY_LEFT) {
-    tetroState.posX = moveLeft(tetroState, globalState);
-  } else if (event.keyCode === KEY_RIGHT) {
-    tetroState.posX = moveRight(tetroState, globalState);
-  } else if (event.keyCode === KEY_SPACE) {
-    tetroState.block = rotate(tetroState, globalState);
+  switch (event.keyCode) {
+    case KEY_LEFT:
+      tetroState.posX = moveLeft(tetroState, boardState);
+      break;
+    case KEY_RIGHT:
+      tetroState.posX = moveRight(tetroState, boardState);
+      break;
+    case KEY_SPACE:
+      tetroState.block = rotate(tetroState, boardState);
+      break;
+    case ESC_SPACE:
+      globalState.paused = !globalState.paused;
+      break;
+    default:
+      break;
   }
 });
