@@ -105,6 +105,25 @@ export const moveRight = (tetroState, boardState) => {
   return posX;
 };
 
+const canMoveDown = (tetroState, boardState) => {
+  const { posX, posY, block } = tetroState;
+  const blocks = getBlocksPos(block);
+  for (let i = 0; i < blocks.length; i++) {
+    const { row, col } = blocks[i];
+    const nextPos = boardState.find(v => v.posX === col + posX + 1 && v.posY === row + posY + 2);
+    if (nextPos || col + posX + 1 >= cols) return false;
+  }
+  return true;
+};
+
+export const moveDown = (tetroState, boardState) => {
+  const { posY } = tetroState;
+  if (canMoveDown(tetroState, boardState)) {
+    return posY + 1;
+  }
+  return posY;
+};
+
 const canRotate = (tetroState, nextBlock, boardState) => {
   const { posX, posY } = tetroState;
   const blocks = getBlocksPos(nextBlock);

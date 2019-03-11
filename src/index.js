@@ -11,8 +11,17 @@ import {
   clearLines,
   isGameOver,
   displayMessage,
+  moveDown,
 } from './helpers';
-import { clientHeight, clientWidth, KEY_ESC, KEY_LEFT, KEY_RIGHT, KEY_SPACE } from './constants';
+import {
+  clientHeight,
+  clientWidth,
+  KEY_DOWN,
+  KEY_ESC,
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_SPACE,
+} from './constants';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -109,6 +118,9 @@ window.addEventListener('keydown', event => {
       break;
     case KEY_RIGHT:
       tetroState.posX = moveRight(tetroState, boardState);
+      break;
+    case KEY_DOWN:
+      tetroState.posY = moveDown(tetroState, boardState);
       break;
     case KEY_SPACE:
       tetroState.block = rotate(tetroState, boardState);
