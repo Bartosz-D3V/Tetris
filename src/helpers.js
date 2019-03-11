@@ -1,4 +1,12 @@
-import { BLOCK_HEIGHT, BLOCK_WIDTH, cols, rows, tetrominos } from './constants';
+import {
+  BLOCK_HEIGHT,
+  BLOCK_WIDTH,
+  clientHeight,
+  clientWidth,
+  cols,
+  rows,
+  tetrominos,
+} from './constants';
 
 let shapes = [...tetrominos];
 
@@ -137,4 +145,20 @@ export const clearLines = (ctx, boardState) => {
     }
   }
   return newboardState;
+};
+
+const getTetroHeight = tetroState => {
+  const blocks = getBlocksPos(tetroState.block);
+  return Math.max(...blocks.map(v => v.row)) - Math.min(...blocks.map(v => v.row)) + 1;
+};
+
+export const isGameOver = (tetroState, boardState) => {
+  return Math.min(...boardState.map(v => v.posY)) - getTetroHeight(tetroState) <= 0;
+};
+
+export const displayMessage = (ctx, text, color = 'black') => {
+  ctx.fillStyle = color;
+  ctx.font = '30px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, clientWidth / 2, clientHeight / 2);
 };
