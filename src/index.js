@@ -110,5 +110,7 @@ window.addEventListener('keydown', event => {
     case ESC_SPACE:
       globalState.paused = !globalState.paused;
       break;
+    default:
+      break;
   }
 });
