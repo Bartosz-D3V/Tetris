@@ -17,6 +17,7 @@ import {
 import {
   clientHeight,
   clientWidth,
+  cols,
   KEY_DOWN,
   KEY_ESC,
   KEY_LEFT,
@@ -35,6 +36,7 @@ const setCanvasSize = () => {
 
 const globalState = {
   paused: false,
+  score: 0,
 };
 
 const boardState = [];
@@ -84,8 +86,16 @@ const dockTetromino = () => {
   tetroState.tetromino = null;
 };
 
+const updateScore = (currentState, newState) => {
+  const removedLines = (currentState.length - newState.length) / cols;
+  globalState.score = removedLines > 1 ? removedLines * 4 : removedLines;
+};
+
 const removeFilledLines = () => {
-  boardState.splice(0, boardState.length, ...clearLines(ctx, boardState));
+  const currentState = [...boardState];
+  const newState = [...clearLines(ctx, boardState)];
+  boardState.splice(0, boardState.length, ...newState);
+  updateScore(currentState, newState);
 };
 
 const recalculateboardState = () => {

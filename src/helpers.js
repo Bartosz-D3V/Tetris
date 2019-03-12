@@ -27,8 +27,8 @@ export const drawBlock = (ctx, x, y, color = 'black') => {
 };
 
 export const getBlocksPos = block => {
-  let row = 0;
-  let col = 0;
+  let row = -1;
+  let col = -1;
   const blockPos = [];
   for (let bit = 0x8000; bit > 0; bit >>= 1) {
     if (++row === 4) {
