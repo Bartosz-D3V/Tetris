@@ -12,6 +12,7 @@ import {
   isGameOver,
   displayMessage,
   moveDown,
+  drop,
 } from './helpers';
 import {
   clientHeight,
@@ -21,6 +22,7 @@ import {
   KEY_LEFT,
   KEY_RIGHT,
   KEY_SPACE,
+  KEY_UP,
 } from './constants';
 
 const canvas = document.getElementById('board');
@@ -122,8 +124,11 @@ window.addEventListener('keydown', event => {
     case KEY_DOWN:
       tetroState.posY = moveDown(tetroState, boardState);
       break;
-    case KEY_SPACE:
+    case KEY_UP:
       tetroState.block = rotate(tetroState, boardState);
+      break;
+    case KEY_SPACE:
+      tetroState.posY = drop(tetroState, boardState);
       break;
     case KEY_ESC:
       globalState.paused = !globalState.paused;
