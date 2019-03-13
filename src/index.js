@@ -1,5 +1,5 @@
 import '../style/manifest.css';
-import './polyfill';
+import requestAnimFrame from './polyfill';
 import {
   getNextTetromino,
   drawTetromino,
@@ -26,7 +26,7 @@ import {
   KEY_SPACE,
   KEY_UP,
 } from './constants';
-import { timestamp } from './util';
+import timestamp from './util';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -131,7 +131,7 @@ const startGame = () => {
       recalculateBoardState(Math.min(1, (now - last) / 1000.0));
     }
     last = now;
-    requestAnimFrame(frame, canvas);
+    requestAnimFrame(frame, canvas)(frame);
   };
   frame();
 };

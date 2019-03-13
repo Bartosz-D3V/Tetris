@@ -1,10 +1,10 @@
-window.requestAnimFrame = (() => {
+export default () => {
   return (
     window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
-    function(callback) {
+    function fallBack(callback) {
       window.setTimeout(callback, 500);
     }
   );
-})();
+};

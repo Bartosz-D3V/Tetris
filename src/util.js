@@ -1,1 +1,1 @@
-export const timestamp = () => new Date().getTime();
+export default () => new Date().getTime();
