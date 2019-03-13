@@ -1,4 +1,5 @@
 import '../style/manifest.css';
+import './polyfill';
 import {
   getNextTetromino,
   drawTetromino,
@@ -25,6 +26,7 @@ import {
   KEY_SPACE,
   KEY_UP,
 } from './constants';
+import { timestamp } from './util';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -37,6 +39,7 @@ const setCanvasSize = () => {
 const globalState = {
   paused: false,
   score: 0,
+  frameTime: 0,
 };
 
 const boardState = [];
@@ -98,29 +101,46 @@ const removeFilledLines = () => {
   updateScore(currentState, newState);
 };
 
-const recalculateboardState = () => {
-  if (!landing(tetroState, boardState)) {
-    tetroState.posY++;
-  } else {
-    dockTetromino();
-    removeFilledLines();
+const recalculateBoardState = time => {
+  globalState.frameTime += time;
+  if (globalState.frameTime >= 0.15) {
+    if (!landing(tetroState, boardState)) {
+      tetroState.posY++;
+    } else {
+      dockTetromino();
+      removeFilledLines();
+    }
+    if (!tetroState.tetromino) {
+      resetTetroState();
+    }
+    redrawBoard();
+    if (isGameOver(tetroState, boardState)) {
+      globalState.paused = true;
+      displayMessage(ctx, 'Game Over!');
+    }
+    globalState.frameTime = 0;
   }
-  if (!tetroState.tetromino) {
-    resetTetroState();
-  }
-  redrawBoard();
-  if (isGameOver(tetroState, boardState)) {
-    globalState.paused = true;
-    displayMessage(ctx, 'Game Over!');
-  }
+};
+
+const startGame = () => {
+  let last = timestamp();
+  let now = timestamp();
+  const frame = () => {
+    now = timestamp();
+    if (!globalState.paused) {
+      recalculateBoardState(Math.min(1, (now - last) / 1000.0));
+    }
+    last = now;
+    requestAnimFrame(frame, canvas);
+  };
+  frame();
 };
 
 window.addEventListener('load', () => {
   resetboardState();
   setCanvasSize();
-  window.setInterval(() => {
-    if (!globalState.paused) recalculateboardState();
-  }, 500);
+
+  startGame();
 });
 
 window.addEventListener('keydown', event => {
