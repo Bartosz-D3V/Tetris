@@ -25,61 +25,60 @@
 }
 
 .score {
-  border-width: 2px;
   border-color: black;
   border-style: dashed;
-  width: 30%;
+  border-width: 2px;
   margin-right: 5%;
+  width: 30%;
 }
 
 .pixel-btn {
-  font-family: 'Silkscreen', sans-serif;
   background: none;
   border: none;
-  outline: none;
-  display: block;
-  font-size: 3vw;
-  padding-top: 15px;
-  padding-bottom: 5px;
-  margin: 5% auto;
   color: #eee;
+  display: block;
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 3vw;
+  margin: 5% auto;
+  outline: none;
+  padding-bottom: 5px;
+  padding-top: 15px;
   transition: box-shadow 0.1s, background 0.1s, padding 0.1s;
 }
 
 button:active {
-  padding-top: 15px;
   padding-bottom: 5px;
+  padding-top: 15px;
   transition: box-shadow 0.1s, background 0.1s, padding 0.1s;
 }
 
 .pixel-btn--active:active {
+  background: #2353e0;
   box-shadow: 5px 5px #2353e0, 0 5px #2353e0, 0 10px #2353e0, 0 0 #133db9, 0 15px #2979ff,
     -5px 10px #2a6cda, 5px 10px #2a6cda;
-  background: #2353e0;
 }
 
 .pixel-btn--active {
+  background: #133db9;
   box-shadow: 5px 0 #133db9, 0 0 #133db9, 0 5px #133db9, 0 -5px #133db9, 0 15px #2979ff,
     -5px 10px #2a6cda, 5px 10px #2a6cda;
-  background: #133db9;
 }
 
 .pixel-btn--disabled:active {
+  background: #464646;
   box-shadow: 5px 5px #464646, 0 5px #353535, 0 10px #464646, 0 0 #464646, 0 15px #636363,
     -5px 10px #464646, 5px 10px #464646;
-  background: #464646;
 }
 
 .pixel-btn--disabled {
+  background: #464646;
   box-shadow: 5px 0 #464646, 0 0 #353535, 0 5px #464646, 0 -5px #464646, 0 15px #636363,
     -5px 10px #464646, 5px 10px #464646;
-  background: #464646;
 }
 
 .wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
