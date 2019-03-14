@@ -37,7 +37,7 @@ const setCanvasSize = () => {
 };
 
 const globalState = {
-  paused: false,
+  paused: true,
   score: 0,
   frameTime: 0,
 };
@@ -92,6 +92,7 @@ const dockTetromino = () => {
 const updateScore = (currentState, newState) => {
   const removedLines = (currentState.length - newState.length) / cols;
   globalState.score = removedLines > 1 ? removedLines * 4 : removedLines;
+  document.getElementById('score-display').innerText = globalState.score;
 };
 
 const removeFilledLines = () => {
@@ -135,6 +136,14 @@ const startGame = () => {
   };
   frame();
 };
+
+document.getElementById('btn-start').addEventListener('click', () => {
+  globalState.paused = false;
+});
+
+document.getElementById('btn-pause').addEventListener('click', () => {
+  globalState.paused = true;
+});
 
 window.addEventListener('load', () => {
   resetboardState();

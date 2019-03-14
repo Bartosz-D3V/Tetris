@@ -11,12 +11,12 @@
 }
 
 .header {
-  font-size: 4em;
+  font-size: 4vw;
   text-align: center;
 }
 
 .sub-header {
-  font-size: 1.5em;
+  font-size: 1.8vw;
   text-align: center;
 }
 
@@ -30,6 +30,50 @@
   border-style: dashed;
   width: 30%;
   margin-right: 5%;
+}
+
+.pixel-btn {
+  font-family: 'Silkscreen', sans-serif;
+  background: none;
+  border: none;
+  outline: none;
+  display: block;
+  font-size: 3vw;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  margin: 5% auto;
+  color: #eee;
+  transition: box-shadow 0.1s, background 0.1s, padding 0.1s;
+}
+
+button:active {
+  padding-top: 15px;
+  padding-bottom: 5px;
+  transition: box-shadow 0.1s, background 0.1s, padding 0.1s;
+}
+
+.pixel-btn--active:active {
+  box-shadow: 5px 5px #2353e0, 0 5px #2353e0, 0 10px #2353e0, 0 0 #133db9, 0 15px #2979ff,
+    -5px 10px #2a6cda, 5px 10px #2a6cda;
+  background: #2353e0;
+}
+
+.pixel-btn--active {
+  box-shadow: 5px 0 #133db9, 0 0 #133db9, 0 5px #133db9, 0 -5px #133db9, 0 15px #2979ff,
+    -5px 10px #2a6cda, 5px 10px #2a6cda;
+  background: #133db9;
+}
+
+.pixel-btn--disabled:active {
+  box-shadow: 5px 5px #464646, 0 5px #353535, 0 10px #464646, 0 0 #464646, 0 15px #636363,
+    -5px 10px #464646, 5px 10px #464646;
+  background: #464646;
+}
+
+.pixel-btn--disabled {
+  box-shadow: 5px 0 #464646, 0 0 #353535, 0 5px #464646, 0 -5px #464646, 0 15px #636363,
+    -5px 10px #464646, 5px 10px #464646;
+  background: #464646;
 }
 
 .wrapper {
