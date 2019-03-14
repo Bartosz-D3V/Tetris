@@ -5,3 +5,37 @@
   margin: 0 auto;
   width: 400px;
 }
+
+.pixel-font {
+  font-family: 'Silkscreen', sans-serif;
+}
+
+.header {
+  font-size: 4em;
+  text-align: center;
+}
+
+.sub-header {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.guidance {
+  margin-top: 5%;
+}
+
+.score {
+  border-width: 2px;
+  border-color: black;
+  border-style: dashed;
+  width: 30%;
+  margin-right: 5%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}

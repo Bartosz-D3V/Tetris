@@ -9,6 +9,22 @@
   </head>
 
   <body>
-    <canvas class="board" id="board">Your browser does not support HTML5 :(</canvas>
+    <div class="wrapper">
+      <div class="score">
+        <h1 class="header pixel-font">Tetris</h1>
+        <h1 class="sub-header pixel-font">Yet another Tetris remake in pure JS.</h1>
+        <div class="guidance">
+          <p class="sub-header pixel-font">&#9644; (SPACE) - Drop block</p>
+          <p class="sub-header pixel-font">&#9654; (RIGHT) - Move right</p>
+          <p class="sub-header pixel-font">&#9664; (LEFT) - Move left</p>
+          <p class="sub-header pixel-font">&#9650; (UP) - Rotate</p>
+          <p class="sub-header pixel-font">&#9660; (DOWN) - Speed up</p>
+          <p class="sub-header pixel-font">(ESC) - Pause</p>
+        </div>
+      </div>
+      <div class="game">
+        <canvas class="board" id="board">Your browser does not support HTML5 :(</canvas>
+      </div>
+    </div>
   </body>
 </html>
