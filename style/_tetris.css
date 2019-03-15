@@ -1,9 +1,9 @@
 .board {
   border: 2px dashed #000000;
   display: block;
-  height: 600px;
+  height: 85vh;
   margin: 0 auto;
-  width: 400px;
+  width: 25vw;
 }
 
 .pixel-font {

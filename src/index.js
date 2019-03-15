@@ -91,7 +91,7 @@ const dockTetromino = () => {
 
 const updateScore = (currentState, newState) => {
   const removedLines = (currentState.length - newState.length) / cols;
-  globalState.score = removedLines > 1 ? removedLines * 4 : removedLines;
+  globalState.score += removedLines > 1 ? removedLines * 4 : removedLines;
   document.getElementById('score-display').innerText = globalState.score;
 };
 
@@ -129,7 +129,7 @@ const startGame = () => {
   const frame = () => {
     now = timestamp();
     if (!globalState.paused) {
-      recalculateBoardState(Math.min(1, (now - last) / 1000.0));
+      recalculateBoardState(Math.min(1, (now - last) / 1000));
     }
     last = now;
     requestAnimFrame(frame, canvas)(frame);
@@ -149,17 +149,19 @@ document.getElementById('btn-restart').addEventListener('click', () => {
   resetboardState();
   resetTetroState();
   globalState.score = 0;
+  globalState.paused = false;
   globalState.frameTime = 0;
 });
 
 window.addEventListener('load', () => {
   resetboardState();
   setCanvasSize();
-
   startGame();
 });
 
 window.addEventListener('keydown', event => {
+  const { paused } = globalState;
+  if (paused) return;
   switch (event.keyCode) {
     case KEY_LEFT:
       tetroState.posX = moveLeft(tetroState, boardState);

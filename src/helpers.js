@@ -116,7 +116,7 @@ const canMoveDown = (tetroState, boardState) => {
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
     const nextPos = boardState.find(v => v.posX === col + posX + 1 && v.posY === row + posY + 2);
-    if (nextPos || col + posX + 1 >= cols) return false;
+    if (nextPos || row + posY + getTetroHeight(tetroState) >= rows) return false;
   }
   return true;
 };
