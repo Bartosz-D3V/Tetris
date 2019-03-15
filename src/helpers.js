@@ -22,6 +22,8 @@ export const getNextTetromino = () => {
 
 export const drawBlock = (ctx, x, y, color = 'black') => {
   ctx.fillStyle = color;
+  ctx.lineWidth = 1;
+  ctx.stroke();
   ctx.fillRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
   ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
 };
@@ -187,7 +189,7 @@ export const isGameOver = (tetroState, boardState) => {
 
 export const displayMessage = (ctx, text, color = 'black') => {
   ctx.fillStyle = color;
-  ctx.font = '30px Arial';
+  ctx.font = "3em 'Silkscreen', sans-serif";
   ctx.textAlign = 'center';
   ctx.fillText(text, clientWidth / 2, clientHeight / 2);
 };
