@@ -145,6 +145,13 @@ document.getElementById('btn-pause').addEventListener('click', () => {
   globalState.paused = true;
 });
 
+document.getElementById('btn-restart').addEventListener('click', () => {
+  resetboardState();
+  resetTetroState();
+  globalState.score = 0;
+  globalState.frameTime = 0;
+});
+
 window.addEventListener('load', () => {
   resetboardState();
   setCanvasSize();
