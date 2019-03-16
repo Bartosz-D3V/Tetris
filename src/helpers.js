@@ -63,8 +63,7 @@ export const drawboardState = (ctx, boardState) => {
 };
 
 export const landing = (tetroState, boardState) => {
-  const { landed, posX, posY, block } = tetroState;
-  if (landed) return true;
+  const { posX, posY, block } = tetroState;
   const blocks = getBlocksPos(block);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
@@ -148,7 +147,7 @@ export const drop = (tetroState, boardState) => {
     .filter((v, i, a) => a.indexOf(v) === i)
     .map(v => v + tetroState.posX);
   const dropPosXs = boardState.filter(v => posXs.includes(v.posX));
-  const minPosY = Math.min(...dropPosXs.map(v => v.posY), 19);
+  const minPosY = Math.min(...dropPosXs.map(v => v.posY), rows - 1);
   return minPosY - getTetroHeight(tetroState) - 1;
 };
 
@@ -183,9 +182,7 @@ export const clearLines = (ctx, boardState) => {
   return newboardState;
 };
 
-export const isGameOver = (tetroState, boardState) => {
-  return Math.min(...boardState.map(v => v.posY)) - getTetroHeight(tetroState) <= 0;
-};
+export const isGameOver = (tetroState, boardState) => Math.min(...boardState.map(v => v.posY)) <= 0;
 
 export const displayMessage = (ctx, text, color = 'black') => {
   ctx.fillStyle = color;
