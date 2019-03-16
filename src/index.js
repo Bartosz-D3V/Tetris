@@ -46,7 +46,7 @@ const boardState = [];
 
 const tetroState = {
   posX: 4,
-  posY: -1,
+  posY: -4,
   landed: false,
   tetromino: null,
   block: null,
@@ -71,7 +71,7 @@ const redrawBoard = () => {
 const resetTetroState = () => {
   tetroState.landed = false;
   tetroState.tetromino = getNextTetromino();
-  tetroState.posY = -1;
+  tetroState.posY = -4;
   tetroState.posX = 4;
   const [[block1]] = [tetroState.tetromino.blocks];
   tetroState.block = block1;
@@ -137,15 +137,21 @@ const startGame = () => {
   frame();
 };
 
-document.getElementById('btn-start').addEventListener('click', () => {
+document.getElementById('btn-start').addEventListener('click', event => {
+  event.preventDefault();
+  event.target.blur();
   globalState.paused = false;
 });
 
-document.getElementById('btn-pause').addEventListener('click', () => {
+document.getElementById('btn-pause').addEventListener('click', event => {
+  event.preventDefault();
+  event.target.blur();
   globalState.paused = true;
 });
 
-document.getElementById('btn-restart').addEventListener('click', () => {
+document.getElementById('btn-restart').addEventListener('click', event => {
+  event.preventDefault();
+  event.target.blur();
   resetboardState();
   resetTetroState();
   globalState.score = 0;
