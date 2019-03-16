@@ -23,6 +23,9 @@ script:
   - yarn lint
   - yarn prod
 
+before_deploy:
+  - yarn prod
+
 deploy:
   provider: pages
   local-dir: ./dist/
