@@ -47,6 +47,30 @@ yarn lint // or
 npm run lint
 ```
 
+## Docker
+
+In order to run game as a docker container, please do the following:
+
+1. Build an image:
+
+```bash
+docker build -t tetris .
+```
+
+2. Create container
+
+```bash
+docker run -d -p 80:80 tetris
+```
+
+3. Check your Docker IP before running browser:
+
+```bash
+docker-machine ip default
+```
+
+4. Open IP address in your browser showed in step 3.
+
 ## Future improvements
 
 1. Responsiveness
