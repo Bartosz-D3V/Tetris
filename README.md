@@ -16,9 +16,9 @@ Yet another Tetris remake in pure JS.
 </a>
 </br>
 </br>
-</p>
 
 <img src="showcase/showcase_1.png" width="595" height="415"/>
+</p>
 
 ## About
 
@@ -46,3 +46,9 @@ npm start
 yarn lint // or
 npm run lint
 ```
+
+## Future improvements
+
+1. Responsiveness
+2. Mobile gestures support
+3. Simple AI
