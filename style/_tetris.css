@@ -1,7 +1,84 @@
 .board {
-  border: 1px solid #000000;
+  border: 2px dashed #000000;
   display: block;
-  height: 600px;
+  height: 85vh;
   margin: 0 auto;
-  width: 400px;
+  width: 25vw;
+}
+
+.pixel-font {
+  font-family: 'Silkscreen', sans-serif;
+}
+
+.header {
+  font-size: 4vw;
+  text-align: center;
+}
+
+.sub-header {
+  font-size: 1.8vw;
+  text-align: center;
+}
+
+.guidance {
+  margin-top: 5%;
+}
+
+.score {
+  border-color: black;
+  border-style: dashed;
+  border-width: 2px;
+  margin-right: 5%;
+  width: 30%;
+}
+
+.pixel-btn {
+  background: none;
+  border: none;
+  color: #eee;
+  display: block;
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 3vw;
+  margin: 5% auto;
+  outline: none;
+  padding-bottom: 5px;
+  padding-top: 15px;
+  transition: box-shadow 0.1s, background 0.1s, padding 0.1s;
+}
+
+button:active {
+  padding-bottom: 5px;
+  padding-top: 15px;
+  transition: box-shadow 0.1s, background 0.1s, padding 0.1s;
+}
+
+.pixel-btn--active:active {
+  background: #2353e0;
+  box-shadow: 5px 5px #2353e0, 0 5px #2353e0, 0 10px #2353e0, 0 0 #133db9, 0 15px #2979ff,
+    -5px 10px #2a6cda, 5px 10px #2a6cda;
+}
+
+.pixel-btn--active {
+  background: #133db9;
+  box-shadow: 5px 0 #133db9, 0 0 #133db9, 0 5px #133db9, 0 -5px #133db9, 0 15px #2979ff,
+    -5px 10px #2a6cda, 5px 10px #2a6cda;
+}
+
+.pixel-btn--disabled:active {
+  background: #464646;
+  box-shadow: 5px 5px #464646, 0 5px #353535, 0 10px #464646, 0 0 #464646, 0 15px #636363,
+    -5px 10px #464646, 5px 10px #464646;
+}
+
+.pixel-btn--disabled {
+  background: #464646;
+  box-shadow: 5px 0 #464646, 0 0 #353535, 0 5px #464646, 0 -5px #464646, 0 15px #636363,
+    -5px 10px #464646, 5px 10px #464646;
+}
+
+.wrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }

@@ -22,13 +22,15 @@ export const getNextTetromino = () => {
 
 export const drawBlock = (ctx, x, y, color = 'black') => {
   ctx.fillStyle = color;
+  ctx.lineWidth = 1;
+  ctx.stroke();
   ctx.fillRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
   ctx.strokeRect(BLOCK_WIDTH * x, BLOCK_HEIGHT * y, BLOCK_WIDTH, BLOCK_HEIGHT);
 };
 
 export const getBlocksPos = block => {
-  let row = 0;
-  let col = 0;
+  let row = -1;
+  let col = -1;
   const blockPos = [];
   for (let bit = 0x8000; bit > 0; bit >>= 1) {
     if (++row === 4) {
@@ -40,6 +42,11 @@ export const getBlocksPos = block => {
     }
   }
   return blockPos;
+};
+
+const getTetroHeight = tetroState => {
+  const blocks = getBlocksPos(tetroState.block);
+  return Math.max(...blocks.map(v => v.row)) - Math.min(...blocks.map(v => v.row)) + 1;
 };
 
 export const drawTetromino = (ctx, x, y, block, color = 'black') => {
@@ -56,8 +63,7 @@ export const drawboardState = (ctx, boardState) => {
 };
 
 export const landing = (tetroState, boardState) => {
-  const { landed, posX, posY, block } = tetroState;
-  if (landed) return true;
+  const { posX, posY, block } = tetroState;
   const blocks = getBlocksPos(block);
   for (let i = 0; i < blocks.length; i++) {
     const { row, col } = blocks[i];
@@ -105,6 +111,25 @@ export const moveRight = (tetroState, boardState) => {
   return posX;
 };
 
+const canMoveDown = (tetroState, boardState) => {
+  const { posX, posY, block } = tetroState;
+  const blocks = getBlocksPos(block);
+  for (let i = 0; i < blocks.length; i++) {
+    const { row, col } = blocks[i];
+    const nextPos = boardState.find(v => v.posX === col + posX + 1 && v.posY === row + posY + 2);
+    if (nextPos || row + posY + getTetroHeight(tetroState) >= rows) return false;
+  }
+  return true;
+};
+
+export const moveDown = (tetroState, boardState) => {
+  const { posY } = tetroState;
+  if (canMoveDown(tetroState, boardState)) {
+    return posY + 1;
+  }
+  return posY;
+};
+
 const canRotate = (tetroState, nextBlock, boardState) => {
   const { posX, posY } = tetroState;
   const blocks = getBlocksPos(nextBlock);
@@ -114,6 +139,16 @@ const canRotate = (tetroState, nextBlock, boardState) => {
     if (nextPos || col + posX >= cols || col + posX < 0) return false;
   }
   return true;
+};
+
+export const drop = (tetroState, boardState) => {
+  const posXs = getBlocksPos(tetroState.block)
+    .map(v => v.col)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .map(v => v + tetroState.posX);
+  const dropPosXs = boardState.filter(v => posXs.includes(v.posX));
+  const minPosY = Math.min(...dropPosXs.map(v => v.posY), rows - 1);
+  return minPosY - getTetroHeight(tetroState) - 1;
 };
 
 export const rotate = (tetroState, boardState) => {
@@ -147,18 +182,11 @@ export const clearLines = (ctx, boardState) => {
   return newboardState;
 };
 
-const getTetroHeight = tetroState => {
-  const blocks = getBlocksPos(tetroState.block);
-  return Math.max(...blocks.map(v => v.row)) - Math.min(...blocks.map(v => v.row)) + 1;
-};
-
-export const isGameOver = (tetroState, boardState) => {
-  return Math.min(...boardState.map(v => v.posY)) - getTetroHeight(tetroState) <= 0;
-};
+export const isGameOver = (tetroState, boardState) => Math.min(...boardState.map(v => v.posY)) <= 0;
 
 export const displayMessage = (ctx, text, color = 'black') => {
   ctx.fillStyle = color;
-  ctx.font = '30px Arial';
+  ctx.font = "3em 'Silkscreen', sans-serif";
   ctx.textAlign = 'center';
   ctx.fillText(text, clientWidth / 2, clientHeight / 2);
 };
